@@ -13,28 +13,12 @@ import com.example.myauxapp.ui.navigation.UserNavigation
 
 @Composable
 fun HomeScreen() {
-
-    val navController = rememberNavController()
-    Scaffold(
-        bottomBar = {
-            BottomBar(navController)
-        }
-    ) {padding->
-        Box(
-            modifier = Modifier.padding(padding).fillMaxSize()
-        ) {
-            UserNavigation(navController = navController)
-        }
-    }
-
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFFF7F7F7)),
+        modifier = Modifier.fillMaxSize().background(Color(0xFFF7F7F7)),
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "Bienvenido al Home",
+            text = "Bienvenido a MyauX",
             style = MaterialTheme.typography.displayMedium,
             color = Color(0xFF4A148C)
         )

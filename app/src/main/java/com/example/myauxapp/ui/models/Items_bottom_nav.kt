@@ -5,6 +5,8 @@ import androidx.compose.material.icons.automirrored.outlined.Announcement
 import androidx.compose.material.icons.outlined.Announcement
 import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Notifications
+import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.VerifiedUser
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -26,12 +28,12 @@ sealed class Items_bottom_nav (
         NavScreen.Horarios.name
     )
     object Item_bottom_nav3: Items_bottom_nav(
-        Icons.AutoMirrored.Outlined.Announcement,
+        Icons.Outlined.Notifications,
         "Avisos",
         NavScreen.Avisos.name
     )
     object Item_bottom_nav4: Items_bottom_nav(
-        Icons.Outlined.VerifiedUser,
+        Icons.Outlined.Person,
         "User",
         NavScreen.Estudiante.name
     )

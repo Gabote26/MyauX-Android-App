@@ -13,25 +13,11 @@ import com.example.myauxapp.ui.navigation.UserNavigation
 
 @Composable
 fun MainScreen() {
-
     val navController = rememberNavController()
-
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route
-
-    val showBottomBar = currentRoute in listOf(
-        NavScreen.HomeScreen.name,
-        NavScreen.Horarios.name,
-        NavScreen.Avisos.name,
-        NavScreen.Estudiante.name,
-        NavScreen.Config.name
-    )
 
     Scaffold(
         bottomBar = {
-            if (showBottomBar) {
-                BottomBar(navController)
-            }
+            BottomBar(navController)
         }
     ) { padding ->
         UserNavigation(

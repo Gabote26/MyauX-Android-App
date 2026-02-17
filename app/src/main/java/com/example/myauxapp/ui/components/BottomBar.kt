@@ -23,7 +23,6 @@ fun BottomBar(
         Item_bottom_nav5
     )
 
-    BottomAppBar {
         NavigationBar(
             containerColor = MaterialTheme.colorScheme.inverseOnSurface
         ) {
@@ -40,7 +39,7 @@ fun BottomBar(
                             restoreState = true
                         }
                     },
-                            icon = {
+                    icon = {
                         Icon(imageVector = item.icon,
                             contentDescription = item.title
                         )
@@ -51,6 +50,5 @@ fun BottomBar(
                 )
             }
         }
-    }
 
 }
