@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.em
 @Composable
 fun LoginScreen(
     modifier: Modifier = Modifier,
-    onLoginSuccess: () -> Unit
+    onLoginSuccess: (String) -> Unit  // Ahora recibe el rol del usuario
 ) {
 
     val PurpleDark = Color(0xFF4A148C)
@@ -58,7 +58,8 @@ fun LoginScreen(
 
     LaunchedEffect(state) {
         if (state is LoginState.Success) {
-            onLoginSuccess()
+            val successState = state as LoginState.Success
+            onLoginSuccess(successState.userRole)
         }
     }
 

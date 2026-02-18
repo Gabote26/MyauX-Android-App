@@ -18,13 +18,31 @@ class LoginViewModel : ViewModel() {
 
         viewModelScope.launch {
             try {
+                // Verificar si es un profesor con credenciales hardcodeadas
+                if (email.contains("@profesor.com") || email.contains("profe")) {
+                    // Credenciales hardcodeadas para profesores
+                    if ((email == "profe1@gmail.com" && password == "profe123") ||
+                        (email == "profesor@profesor.com" && password == "profe123")) {
+                        _state.value = LoginState.Success(
+                            nombre = "Profesor",
+                            userRole = "profesor"
+                        )
+                        return@launch
+                    } else {
+                        _state.value = LoginState.Error("Credenciales de profesor inválidas")
+                        return@launch
+                    }
+                }
+
+                // Si no es profesor, intentar login normal de estudiante
                 val response = RetrofitClient.api.login(
                     LoginRequest(email, password)
                 )
 
                 if (response.isSuccessful && response.body() != null) {
                     _state.value = LoginState.Success(
-                        response.body()!!.nombre
+                        nombre = response.body()!!.nombre,
+                        userRole = "estudiante"
                     )
                 } else {
                     _state.value =

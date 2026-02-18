@@ -23,32 +23,33 @@ fun BottomBar(
         Item_bottom_nav5
     )
 
-        NavigationBar(
-            containerColor = MaterialTheme.colorScheme.inverseOnSurface
-        ) {
-            menu_items.forEach {item->
-                val selected = currentRoute(navController) == item.ruta
-                NavigationBarItem(
-                    selected = selected,
-                    onClick = {
-                        navController.navigate(item.ruta) {
-                            popUpTo(navController.graph.startDestinationId) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
+    NavigationBar(
+        containerColor = MaterialTheme.colorScheme.inverseOnSurface
+    ) {
+        menu_items.forEach {item->
+            val selected = currentRoute(navController) == item.ruta
+            NavigationBarItem(
+                selected = selected,
+                onClick = {
+                    navController.navigate(item.ruta) {
+                        popUpTo(navController.graph.startDestinationId) {
+                            saveState = true
                         }
-                    },
-                    icon = {
-                        Icon(imageVector = item.icon,
-                            contentDescription = item.title
-                        )
-                    },
-                    label = {
-                        Text(text = item.title)
+                        launchSingleTop = true
+                        restoreState = true
                     }
-                )
-            }
+                },
+                icon = {
+                    Icon(imageVector = item.icon,
+                        contentDescription = item.title
+                    )
+                },
+                label = {
+                    Text(text = item.title)
+                }
+            )
         }
+    }
+
 
 }

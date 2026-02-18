@@ -46,8 +46,13 @@ fun AppNavigation() {
 
         composable(RootScreen.Login.route) {
             LoginScreen(
-                onLoginSuccess = {
-                    navController.navigate(RootScreen.Main.route) {
+                onLoginSuccess = { userRole ->
+                    val destination = if (userRole == "profesor") {
+                        "teacher_main"
+                    } else {
+                        RootScreen.Main.route
+                    }
+                    navController.navigate(destination) {
                         popUpTo(RootScreen.Login.route) {
                             inclusive = true
                         }
@@ -58,6 +63,10 @@ fun AppNavigation() {
 
         composable(RootScreen.Main.route) {
             MainScreen()
+        }
+
+        composable("teacher_main") {
+            TeacherMainScreen()
         }
     }
 }

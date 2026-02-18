@@ -5,5 +5,7 @@ enum class NavScreen {
     Horarios,
     Avisos,
     Estudiante,
-    Config
+    Config,
+    MessageDetail,
+    ComposeMessage
 }
