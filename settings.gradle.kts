@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "TestAndroidApp"
+rootProject.name = "MyauX"
 include(":app")

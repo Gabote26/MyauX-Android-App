@@ -22,6 +22,7 @@ import com.example.myauxapp.ui.components.UnderlineTextField
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.em
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
