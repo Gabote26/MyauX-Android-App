@@ -24,6 +24,9 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.em
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.draw.drawWithCache
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
@@ -77,7 +80,14 @@ fun LoginScreen(
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
                 text = "MyauX",
-                color = PurpleDark,
+                style = MaterialTheme.typography.headlineLarge.copy(
+                    brush = Brush.horizontalGradient(
+                        colors = listOf(
+                            Color(0xFF6A1B9A),
+                            Color(0xFF4A148C)
+                        )
+                    )
+                ),
                 fontWeight = FontWeight.Bold,
                 fontFamily = FontFamily(Font(R.font.poppins_bold)),
                 fontSize = 17.em

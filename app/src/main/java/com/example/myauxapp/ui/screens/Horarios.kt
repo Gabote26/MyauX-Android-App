@@ -12,29 +12,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myauxapp.R
+import com.example.myauxapp.data.repository.HorarioRepository
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 fun Horarios() {
-    var selectedSemester by remember { mutableStateOf("Seleccionar Semestre") }
-    var selectedGroup by remember { mutableStateOf("Seleccionar Grupo") }
-    var selectedSpecialty by remember { mutableStateOf("Seleccionar Especialidad") }
-    
-    var expandedSemester by remember { mutableStateOf(false) }
-    var expandedGroup by remember { mutableStateOf(false) }
-    var expandedSpecialty by remember { mutableStateOf(false) }
-    
-    val semesters = listOf("1er Semestre", "2do Semestre", "3er Semestre", "4to Semestre", "5to Semestre", "6to Semestre")
-    val groups = listOf("Grupo A", "Grupo B", "Grupo C", "Grupo D")
-    val specialties = listOf("Programación", "Electrónica", "Mecatrónica", "Administración")
-    
+    val viewModel: HorarioViewModel = viewModel()
+    val state by viewModel.state
+    val semestre by viewModel.semestre
+    val grupo by viewModel.grupo
+    val especialidad by viewModel.especialidad
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -47,7 +44,7 @@ fun Horarios() {
                 )
             )
     ) {
-        // Header with gradient
+        // Header con gradiente
         Surface(
             modifier = Modifier.fillMaxWidth(),
             shadowElevation = 8.dp,
@@ -75,154 +72,39 @@ fun Horarios() {
                 )
             }
         }
-        
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // Semester Dropdown
-            ExposedDropdownMenuBox(
-                expanded = expandedSemester,
-                onExpandedChange = { expandedSemester = !expandedSemester }
-            ) {
-                OutlinedTextField(
-                    value = selectedSemester,
-                    onValueChange = {},
-                    readOnly = true,
-                    label = { Text("Semestre") },
-                    trailingIcon = {
-                        Icon(Icons.Default.ArrowDropDown, contentDescription = null)
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .menuAnchor(),
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = Color(0xFF6A1B9A),
-                        focusedLabelColor = Color(0xFF6A1B9A),
-                        unfocusedBorderColor = Color(0xFF9E9E9E)
-                    ),
-                    shape = RoundedCornerShape(12.dp)
-                )
-                ExposedDropdownMenu(
-                    expanded = expandedSemester,
-                    onDismissRequest = { expandedSemester = false }
-                ) {
-                    semesters.forEach { semester ->
-                        DropdownMenuItem(
-                            text = { Text(semester) },
-                            onClick = {
-                                selectedSemester = semester
-                                expandedSemester = false
-                            }
-                        )
-                    }
-                }
-            }
-            
-            // Group Dropdown
-            ExposedDropdownMenuBox(
-                expanded = expandedGroup,
-                onExpandedChange = { expandedGroup = !expandedGroup }
-            ) {
-                OutlinedTextField(
-                    value = selectedGroup,
-                    onValueChange = {},
-                    readOnly = true,
-                    label = { Text("Grupo") },
-                    trailingIcon = {
-                        Icon(Icons.Default.ArrowDropDown, contentDescription = null)
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .menuAnchor(),
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = Color(0xFF6A1B9A),
-                        focusedLabelColor = Color(0xFF6A1B9A),
-                        unfocusedBorderColor = Color(0xFF9E9E9E)
-                    ),
-                    shape = RoundedCornerShape(12.dp)
-                )
-                ExposedDropdownMenu(
-                    expanded = expandedGroup,
-                    onDismissRequest = { expandedGroup = false }
-                ) {
-                    groups.forEach { group ->
-                        DropdownMenuItem(
-                            text = { Text(group) },
-                            onClick = {
-                                selectedGroup = group
-                                expandedGroup = false
-                            }
-                        )
-                    }
-                }
-            }
-            
-            // Specialty Dropdown
-            ExposedDropdownMenuBox(
-                expanded = expandedSpecialty,
-                onExpandedChange = { expandedSpecialty = !expandedSpecialty }
-            ) {
-                OutlinedTextField(
-                    value = selectedSpecialty,
-                    onValueChange = {},
-                    readOnly = true,
-                    label = { Text("Especialidad") },
-                    trailingIcon = {
-                        Icon(Icons.Default.ArrowDropDown, contentDescription = null)
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .menuAnchor(),
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = Color(0xFF6A1B9A),
-                        focusedLabelColor = Color(0xFF6A1B9A),
-                        unfocusedBorderColor = Color(0xFF9E9E9E)
-                    ),
-                    shape = RoundedCornerShape(12.dp)
-                )
-                ExposedDropdownMenu(
-                    expanded = expandedSpecialty,
-                    onDismissRequest = { expandedSpecialty = false }
-                ) {
-                    specialties.forEach { specialty ->
-                        DropdownMenuItem(
-                            text = { Text(specialty) },
-                            onClick = {
-                                selectedSpecialty = specialty
-                                expandedSpecialty = false
-                            }
-                        )
-                    }
-                }
-            }
-            
-            // Mi Horario Button
-            Button(
-                onClick = { /* TODO: Navigate to user's personal schedule */ },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF6A1B9A)
-                ),
-                shape = RoundedCornerShape(12.dp),
-                elevation = ButtonDefaults.buttonElevation(
-                    defaultElevation = 4.dp,
-                    pressedElevation = 8.dp
-                )
-            ) {
-                Text(
-                    text = "Mi Horario",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp
-                )
-            }
-            
-            // Schedule Image Display
+
+            // ── Dropdown Semestre ──────────────────────────────────
+            HorarioDropdown(
+                label = "Semestre",
+                selected = semestre,
+                opciones = HorarioRepository.semestres,
+                onSelect = { viewModel.setSemestre(it) }
+            )
+
+            // ── Dropdown Grupo ─────────────────────────────────────
+            HorarioDropdown(
+                label = "Grupo",
+                selected = grupo,
+                opciones = HorarioRepository.grupos,
+                onSelect = { viewModel.setGrupo(it) }
+            )
+
+            // ── Dropdown Especialidad ──────────────────────────────
+            HorarioDropdown(
+                label = "Especialidad",
+                selected = especialidad,
+                opciones = HorarioRepository.especialidades,
+                onSelect = { viewModel.setEspecialidad(it) }
+            )
+
+            // ── Resultado ──────────────────────────────────────────
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -239,54 +121,99 @@ fun Horarios() {
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
-                    if (selectedSemester != "Seleccionar Semestre" && 
-                        selectedGroup != "Seleccionar Grupo" && 
-                        selectedSpecialty != "Seleccionar Especialidad") {
-                        // TODO: Replace with actual schedule image based on selection
-                        // For now, show placeholder
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center,
-                            modifier = Modifier.padding(24.dp)
-                        ) {
+                    when (val s = state) {
+
+                        is HorarioState.Idle -> {
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.Center,
+                                modifier = Modifier.padding(24.dp)
+                            ) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.calendar),
+                                    contentDescription = null,
+                                    modifier = Modifier.size(120.dp)
+                                )
+                                Spacer(modifier = Modifier.height(16.dp))
+                                Text(
+                                    text = "Selecciona semestre, grupo y especialidad\npara ver el horario",
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = Color(0xFF9E9E9E),
+                                    fontSize = 16.sp
+                                )
+                            }
+                        }
+
+                        is HorarioState.Found -> {
                             Image(
-                                painter = painterResource(id = R.drawable.calendar),
+                                painter = painterResource(id = s.imagenRes),
                                 contentDescription = "Horario",
-                                modifier = Modifier.size(120.dp)
-                            )
-                            Spacer(modifier = Modifier.height(20.dp))
-                            Text(
-                                text = "Horario: $selectedSemester - $selectedGroup",
-                                style = MaterialTheme.typography.titleLarge,
-                                color = Color(0xFF6A1B9A),
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 18.sp
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text(
-                                text = selectedSpecialty,
-                                style = MaterialTheme.typography.bodyLarge,
-                                color = Color(0xFF757575),
-                                fontSize = 16.sp
-                            )
-                            Spacer(modifier = Modifier.height(12.dp))
-                            Text(
-                                text = "Aquí se mostrará la imagen del horario",
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = Color(0xFF9E9E9E),
-                                fontSize = 14.sp
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .aspectRatio(1.4f),
+                                contentScale = ContentScale.Fit
                             )
                         }
-                    } else {
-                        Text(
-                            text = "Selecciona semestre, grupo y especialidad\npara ver el horario",
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = Color(0xFF9E9E9E),
-                            fontSize = 16.sp,
-                            modifier = Modifier.padding(24.dp)
-                        )
+
+                        is HorarioState.NotFound -> {
+                            Text(
+                                text = "No se encontró horario para esta combinación.",
+                                color = MaterialTheme.colorScheme.error,
+                                modifier = Modifier.padding(24.dp)
+                            )
+                        }
                     }
                 }
+            }
+        }
+    }
+}
+
+// ── Componente reutilizable de dropdown ───────────────────────
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun HorarioDropdown(
+    label: String,
+    selected: String,
+    opciones: List<String>,
+    onSelect: (String) -> Unit
+) {
+    var expanded by remember { mutableStateOf(false) }
+
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        onExpandedChange = { expanded = !expanded }
+    ) {
+        OutlinedTextField(
+            value = selected.ifBlank { "Selecciona $label" },
+            onValueChange = {},
+            readOnly = true,
+            label = { Text(label) },
+            trailingIcon = { Icon(Icons.Default.ArrowDropDown, null) },
+            modifier = Modifier
+                .menuAnchor()
+                .fillMaxWidth(),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = Color(0xFF6A1B9A),
+                unfocusedBorderColor = Color(0xFF9E9E9E),
+                focusedLabelColor = Color(0xFF6A1B9A),
+                focusedTextColor = Color(0xFF4A148C),
+                unfocusedTextColor = Color(0xFF4A148C)
+            ),
+            shape = RoundedCornerShape(12.dp)
+        )
+        ExposedDropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            opciones.forEach { opcion ->
+                DropdownMenuItem(
+                    text = { Text(opcion) },
+                    onClick = {
+                        onSelect(opcion)
+                        expanded = false
+                    }
+                )
             }
         }
     }
